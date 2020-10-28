@@ -138,6 +138,12 @@ chmod 744 containers.sh
 echo "alias i='ip -c -brie a'" >> .bashrc
 source .bashrc
 
+# --> Need a set of tests to confirm that everything is installed properly!
+#     If this is intended to help people with little experience setting up
+#     a lab as complicated as this one, we should really check to make sure
+#     that everything is set up properly before letting them loose with a false
+#     sense of security.
+
 #Final confirmation
 /root/containers.sh
 echo "
