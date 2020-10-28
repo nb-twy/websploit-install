@@ -55,23 +55,27 @@ git clone https://gitlab.com/akihe/radamsa.git && \
     make install || exit 13
 
 #Installing Ghidra
-
-# first install Java
-wget https://download.websploit.org/jdk.deb
-apt install -y ./jdk.deb
+# Ghidra requires java
+# Kali linux comes with java 11.0.7 installed by default
+# Check if java version >=11 is installed.  If not, install it.
+JAVA_VER=$(java --version 2>/dev/null | grep "^openjdk" | cut -d' ' -f2 | cut -d'.' -f1)
+if [[ JAVA_VER -lt 11 ]]; then
+    wget https://download.websploit.org/jdk.deb || exit 14
+    apt install -y ./jdk.deb || exit 15
+fi
 
 #then download and unzip ghidra
-wget https://ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip
-unzip ghidra*
+wget https://ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip || exit 16
+unzip ghidra* || exit 17
 
 
 # Install python modules
 # Use pip3 by default, since Python2 is officially deprecated
-pip3 install pep8 flake8 pyflakes isort yapf || exit 16
+pip3 install pep8 flake8 pyflakes isort yapf || exit 17
 
 # Then get the .vimrc file from my repo, and install in /etc/vim/vimrc.local so that
 # every user gets the same vim experience:
-curl https://raw.githubusercontent.com/The-Art-of-Hacking/websploit/master/.vimrc > /etc/vim/vimrc.local || exit 17
+curl https://raw.githubusercontent.com/The-Art-of-Hacking/websploit/master/.vimrc > /etc/vim/vimrc.local || exit 18
 
 #installing Docker
 #apt install -y docker.io
