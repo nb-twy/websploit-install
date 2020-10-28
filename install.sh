@@ -47,7 +47,7 @@ apt upgrade -y --with-new-pkgs || exit 51
 
 # Install applications from standard repositories
 apt install -y wget vim vim-python-jedi curl exuberant-ctags \
-    git ack-grep python-pip python3-pip ffuf jupyter-notebook \
+    git ack-grep python3-pip ffuf jupyter-notebook \
     edb-debugger gobuster zaproxy || exit 11
 
 # Clean up any packages and dependencies that are no longer needed
