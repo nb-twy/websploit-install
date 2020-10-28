@@ -67,13 +67,11 @@ unzip ghidra*
 
 # Install python modules
 # Use pip3 by default, since Python2 is officially deprecated
-pip3 install pep8 flake8 pyflakes isort yapf
+pip3 install pep8 flake8 pyflakes isort yapf | exit 16
 
-# Then get the .vimrc file from my repo:
-# --> If you install the vimrc file to /etc/vim/vimrc.local, it will work for every user 
-#     instead of being different for different users.  This is a typical problem when editing
-#     files as a regular user vs. editing as root, with sudo or as otherwise.
-curl https://raw.githubusercontent.com/The-Art-of-Hacking/websploit/master/.vimrc > ~/.vimrc
+# Then get the .vimrc file from my repo, and install in /etc/vim/vimrc.local so that
+# every user gets the same vim experience:
+curl https://raw.githubusercontent.com/The-Art-of-Hacking/websploit/master/.vimrc > /etc/vim/vimrc.local
 
 #installing Docker
 #apt install -y docker.io
