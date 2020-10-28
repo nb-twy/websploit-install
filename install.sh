@@ -35,13 +35,33 @@ practice ethical hacking (penetration testing) skills.
 read -n 1 -s -r -p "Press any key to continue the setup..."
 
 echo " "
-# Setting Up vim with Python Jedi to be used in several training courses
 
-cd ~/
-apt update
-# --> Check to see if the attempt to install python-pip causes the system to fail installing 
-#     python3-pip.
-apt install -y wget vim vim-python-jedi curl exuberant-ctags git ack-grep python-pip python3-pip
+# --> Need to exit on errors consistently!
+apt update | exit 10
+
+# Install applications from standard repositories
+apt install -y wget vim vim-python-jedi curl exuberant-ctags \
+    git ack-grep python-pip python3-pip ffuf jupyter-notebook \
+    edb-debugger gobuster zaproxy | exit 11
+
+
+#Installing radamnsa
+# --> Doesn't need to be in root!  Put in Documents or ethical-hacking
+cd /root
+git clone https://gitlab.com/akihe/radamsa.git && cd radamsa && make && sudo make install
+
+#Installing Ghidra
+cd /root
+
+# first install Java
+wget https://download.websploit.org/jdk.deb
+apt install -y ./jdk.deb
+
+#then download and unzip ghidra
+wget https://ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip
+unzip ghidra*
+
+
 # --> There should definitely be a check here or default to using pip3.  Python2 is officially
 #     deprecated afterall.
 pip install pep8 flake8 pyflakes isort yapf
@@ -92,38 +112,6 @@ git clone https://github.com/The-Art-of-Hacking/h4cker.git
 # --> Put this in $HOME/Documents/ethical-hacking
 curl -L https://testssl.sh --output testssl.sh
 chmod +x testssl.sh
-
-# --> Put all of the installations in an install section at the top
-#Installing ffuf 
-apt install -y ffuf
-
-#Installing Jupyter Notebooks
-apt install -y jupyter-notebook
-
-#Installing radamnsa
-# --> Doesn't need to be in root!  Put in Documents or ethical-hacking
-cd /root
-git clone https://gitlab.com/akihe/radamsa.git && cd radamsa && make && sudo make install
-
-#Installing Ghidra
-cd /root
-
-# first install Java
-wget https://download.websploit.org/jdk.deb
-apt install -y ./jdk.deb
-
-#then download and unzip ghidra
-wget https://ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip
-unzip ghidra*
-
-#Installing EDB
-apt install -y edb-debugger
-
-#Installing gobuster
-apt install -y gobuster
-
-#Installing OWASP ZAP
-apt install -y zaproxy
 
 #Getting the container info script
 # --> This should go in the ethical-hacking dir 
