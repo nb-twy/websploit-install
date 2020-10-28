@@ -55,7 +55,6 @@ git clone https://gitlab.com/akihe/radamsa.git && \
     make install | exit 13
 
 #Installing Ghidra
-cd /root
 
 # first install Java
 wget https://download.websploit.org/jdk.deb
@@ -66,9 +65,9 @@ wget https://ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip
 unzip ghidra*
 
 
-# --> There should definitely be a check here or default to using pip3.  Python2 is officially
-#     deprecated afterall.
-pip install pep8 flake8 pyflakes isort yapf
+# Install python modules
+# Use pip3 by default, since Python2 is officially deprecated
+pip3 install pep8 flake8 pyflakes isort yapf
 
 # Then get the .vimrc file from my repo:
 # --> If you install the vimrc file to /etc/vim/vimrc.local, it will work for every user 
