@@ -44,11 +44,15 @@ apt install -y wget vim vim-python-jedi curl exuberant-ctags \
     git ack-grep python-pip python3-pip ffuf jupyter-notebook \
     edb-debugger gobuster zaproxy | exit 11
 
+# Create a directory for all setup files $HOME/websploit
+mkdir -p $HOME/websploit | exit 12
+cd $HOME/websploit
 
 #Installing radamnsa
-# --> Doesn't need to be in root!  Put in Documents or ethical-hacking
-cd /root
-git clone https://gitlab.com/akihe/radamsa.git && cd radamsa && make && sudo make install
+git clone https://gitlab.com/akihe/radamsa.git && \
+    cd radamsa && \
+    make && \
+    make install | exit 13
 
 #Installing Ghidra
 cd /root
