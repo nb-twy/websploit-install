@@ -36,8 +36,11 @@ read -n 1 -s -r -p "Press any key to continue the setup..."
 
 echo " "
 
-# --> Need to exit on errors consistently!
+# Update repository metadata
 apt update || exit 10
+
+# Clean up any packages and dependencies that are no longer needed
+apt autoremove || exit 10
 
 # Install applications from standard repositories
 apt install -y wget vim vim-python-jedi curl exuberant-ctags \
