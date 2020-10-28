@@ -37,13 +37,13 @@ read -n 1 -s -r -p "Press any key to continue the setup..."
 echo " "
 
 # Make sure apt is using https (http is the default)
-sed 's|^deb http://|deb https://|'  /etc/apt/sources.list
+sed -i 's|^deb http://|deb https://|'  /etc/apt/sources.list || exit 50
 
 # Update repository metadata
 apt update || exit 10
 
 # Upgrade existing packages
-apt upgrade -y --with-new-pkgs
+apt upgrade -y --with-new-pkgs || exit 51
 
 # Install applications from standard repositories
 apt install -y wget vim vim-python-jedi curl exuberant-ctags \
