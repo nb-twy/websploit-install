@@ -36,16 +36,22 @@ read -n 1 -s -r -p "Press any key to continue the setup..."
 
 echo " "
 
+# Make sure apt is using https (http is the default)
+sed 's|^deb http://|deb https://|'  /etc/apt/sources.list
+
 # Update repository metadata
 apt update || exit 10
 
-# Clean up any packages and dependencies that are no longer needed
-apt autoremove || exit 10
+# Upgrade existing packages
+apt upgrade -y --with-new-pkgs
 
 # Install applications from standard repositories
 apt install -y wget vim vim-python-jedi curl exuberant-ctags \
     git ack-grep python-pip python3-pip ffuf jupyter-notebook \
     edb-debugger gobuster zaproxy || exit 11
+
+# Clean up any packages and dependencies that are no longer needed
+apt autoremove || exit 10
 
 # Create a directory for all setup files $HOME/websploit
 SETUP_DIR="$HOME/websploit"
