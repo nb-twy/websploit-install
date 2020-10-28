@@ -37,22 +37,22 @@ read -n 1 -s -r -p "Press any key to continue the setup..."
 echo " "
 
 # --> Need to exit on errors consistently!
-apt update | exit 10
+apt update || exit 10
 
 # Install applications from standard repositories
 apt install -y wget vim vim-python-jedi curl exuberant-ctags \
     git ack-grep python-pip python3-pip ffuf jupyter-notebook \
-    edb-debugger gobuster zaproxy | exit 11
+    edb-debugger gobuster zaproxy || exit 11
 
 # Create a directory for all setup files $HOME/websploit
-mkdir -p $HOME/websploit | exit 12
+mkdir -p $HOME/websploit || exit 12
 cd $HOME/websploit
 
 #Installing radamnsa
 git clone https://gitlab.com/akihe/radamsa.git && \
     cd radamsa && \
     make && \
-    make install | exit 13
+    make install || exit 13
 
 #Installing Ghidra
 
@@ -67,20 +67,20 @@ unzip ghidra*
 
 # Install python modules
 # Use pip3 by default, since Python2 is officially deprecated
-pip3 install pep8 flake8 pyflakes isort yapf | exit 16
+pip3 install pep8 flake8 pyflakes isort yapf || exit 16
 
 # Then get the .vimrc file from my repo, and install in /etc/vim/vimrc.local so that
 # every user gets the same vim experience:
-curl https://raw.githubusercontent.com/The-Art-of-Hacking/websploit/master/.vimrc > /etc/vim/vimrc.local
+curl https://raw.githubusercontent.com/The-Art-of-Hacking/websploit/master/.vimrc > /etc/vim/vimrc.local || exit 17
 
 #installing Docker
 #apt install -y docker.io
 
-curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
-echo 'deb [arch=amd64] https://download.docker.com/linux/debian buster stable' | sudo tee /etc/apt/sources.list.d/docker.list
-apt update
-apt remove docker docker-engine docker.io
-apt install -y docker-ce
+curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - || exit 20
+echo 'deb [arch=amd64] https://download.docker.com/linux/debian buster stable' | sudo tee /etc/apt/sources.list.d/docker.list || exit 21
+apt update || exit 22
+apt remove docker docker-engine docker.io || exit 23
+apt install -y docker-ce || exit 24
 
 # setup containers
 docker run --name webgoat -d --restart unless-stopped -p 8881:8080 -t santosomar/webgoat
