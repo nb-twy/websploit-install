@@ -45,8 +45,9 @@ apt install -y wget vim vim-python-jedi curl exuberant-ctags \
     edb-debugger gobuster zaproxy || exit 11
 
 # Create a directory for all setup files $HOME/websploit
-mkdir -p $HOME/websploit || exit 12
-cd $HOME/websploit
+SETUP_DIR="$HOME/websploit"
+mkdir -p "$SETUP_DIR" || exit 12
+cd "$SETUP_DIR"
 
 #Installing radamnsa
 git clone https://gitlab.com/akihe/radamsa.git && \
@@ -108,16 +109,17 @@ docker run --name yascon-hackme -d --restart unless-stopped -p 9002:80 santosoma
 # for bwapp - go to /install.php then user/pass is bee/bug
 
 #downloading the h4cker wallpaper
-if [[ -d $HOME/Pictures ]]; then
-    cd $HOME/Pictures
+if [[ -d "$HOME/Pictures" ]]; then
+    cd "$HOME"/Pictures
     wget https://h4cker.org/img/h4cker_wallpaper.png
-    cd $HOME/websploit
+    cd "$SETUP_DIR"
 fi
 
 # Adding an alias for ip command
-echo "alias i='ip -c -brie a'" >> websploit-aliases.sh
-echo "source $HOME/websploit/websploit-aliases.sh" >> $HOME/.bashrc
-echo "source $HOME/websploit/websploit-aliases.sh" >> root/.bashrc
+ALIAS_FILE="$SETUP_DIR/websploit-aliases.sh"
+echo "alias i='ip -c -brie a'" >> "$ALIAS_FILE"
+echo "source $ALIAS_FILE" >> "$HOME/.bashrc"
+echo "source $ALIAS_FILE" >> root/.bashrc
 source .bashrc
 
 # --> Need a set of tests to confirm that everything is installed properly!
