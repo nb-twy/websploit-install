@@ -111,19 +111,13 @@ docker run --name yascon-hackme -d --restart unless-stopped -p 9002:80 santosoma
 if [[ -d $HOME/Pictures ]]; then
     cd $HOME/Pictures
     wget https://h4cker.org/img/h4cker_wallpaper.png
+    cd $HOME/websploit
 fi
 
-#Getting the container info script
-# --> This should go in the ethical-hacking dir 
-cd /root
-wget http://websploit.h4cker.org/containers.sh
-chmod 744 containers.sh
-
 # Adding an alias for ip command
-# --> Aliases need to be added for both the current user and for root
-# --> Use an alias script (h4cker.alias.sh), put it in /usr/bin, and reference from both
-#     $HOME/.bashrc and /root/.bashrc
-echo "alias i='ip -c -brie a'" >> .bashrc
+echo "alias i='ip -c -brie a'" >> websploit-aliases.sh
+echo "source $HOME/websploit/websploit-aliases.sh" >> $HOME/.bashrc
+echo "source $HOME/websploit/websploit-aliases.sh" >> root/.bashrc
 source .bashrc
 
 # --> Need a set of tests to confirm that everything is installed properly!
@@ -132,8 +126,13 @@ source .bashrc
 #     that everything is set up properly before letting them loose with a false
 #     sense of security.
 
+#Getting the container info script
+# --> This should go in the ethical-hacking dir 
+wget http://websploit.h4cker.org/containers.sh
+chmod 744 containers.sh
+
 #Final confirmation
-/root/containers.sh
+./containers.sh
 echo "
 All tools, apps, and containers have been installed and setup.
 -----------------
