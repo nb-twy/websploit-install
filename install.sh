@@ -136,7 +136,7 @@ curl https://raw.githubusercontent.com/The-Art-of-Hacking/websploit/master/.vimr
 
 #installing Docker
 echo "[*] Installing docker"
-if ! docker ps -a 2>&1 1>/dev/null; then
+if ! docker ps -a 2>/dev/null 1>&2; then
     cd "$SETUP_DIR"
     curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - || exit 20
     echo 'deb [arch=amd64] https://download.docker.com/linux/debian buster stable' | sudo tee /etc/apt/sources.list.d/docker.list || exit 21
@@ -151,7 +151,7 @@ else
 fi
 
 # setup containers
-if docker ps 2>&1 1>/dev/null; then
+if docker ps 2>/dev/null 1>&2; then
     docker run --name webgoat -d --restart unless-stopped -p 8881:8080 -t santosomar/webgoat
     docker run --name juice-shop --restart unless-stopped -d -p 8882:3000 santosomar/juice-shop:latest
     docker run --name dvwa --restart unless-stopped -itd -p 8883:80 santosomar/dvwa
