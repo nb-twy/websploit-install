@@ -51,7 +51,7 @@ apt install -y wget vim vim-python-jedi curl exuberant-ctags \
     edb-debugger gobuster zaproxy || exit 11
 
 # Clean up any packages and dependencies that are no longer needed
-apt autoremove || exit 10
+apt autoremove -y || exit 10
 
 # Create a directory for all setup files $HOME/websploit
 SETUP_DIR="$HOME/websploit"
