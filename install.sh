@@ -52,11 +52,14 @@ apt install -y wget vim vim-python-jedi curl exuberant-ctags \
 echo "[*] Clean up any packages and dependencies that are no longer needed"
 apt autoremove -y || exit 10
 
-# Get the username of the user running the script using sudo
-SCRIPT_USER="$(whoami)"
+# Determine where to put the websploit dir
+if [[ "$(pwd)" = *root* ]]; then
+    SETUP_DIR="/root/websploit"
+else
+    SETUP_DIR="$(pwd | cut -d'/' -f1-3)""/websploit"
+fi
 
 # Create a directory for all setup files /home/$SCRIPT_USER/websploit
-SETUP_DIR="/home/$SCRIPT_USER/websploit"
 mkdir -p "$SETUP_DIR" || exit 12
 
 # Installing radamsa
