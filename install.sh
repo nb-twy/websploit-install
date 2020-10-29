@@ -56,7 +56,8 @@ apt autoremove -y || exit 10
 if [[ "$(pwd)" = *root* ]]; then
     SETUP_DIR="/root/websploit"
 else
-    SETUP_DIR="$(pwd | cut -d'/' -f1-3)""/websploit"
+    HOME="$(pwd | cut -d'/' -f1-3)"
+    SETUP_DIR="$HOME""/websploit"
 fi
 
 # Create a directory for all setup files /home/$SCRIPT_USER/websploit
@@ -191,8 +192,8 @@ if [[ ! -f "$ALIAS_FILE" ]]; then
     echo "alias i='ip -c -brie a'" >> "$ALIAS_FILE"
     chmod 744 "$ALIAS_FILE"
     echo "source $ALIAS_FILE" >> "$HOME/.bashrc"
-    echo "source $ALIAS_FILE" >> root/.bashrc
-    source .bashrc
+    echo "source $ALIAS_FILE" >> "/root/.bashrc"
+    source ~/.bashrc
 else
     echo "[-] Alias file already exists.  Edit aliases at $ALIAS_FILE"
 fi
