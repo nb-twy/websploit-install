@@ -53,8 +53,11 @@ apt install -y wget vim vim-python-jedi curl exuberant-ctags \
 # Clean up any packages and dependencies that are no longer needed
 apt autoremove -y || exit 10
 
-# Create a directory for all setup files $HOME/websploit
-SETUP_DIR="$HOME/websploit"
+# Get the username of the user running the script using sudo
+SCRIPT_USER="$(whoami)"
+
+# Create a directory for all setup files /home/$SCRIPT_USER/websploit
+SETUP_DIR="/home/$SCRIPT_USER/websploit"
 mkdir -p "$SETUP_DIR" || exit 12
 cd "$SETUP_DIR"
 
