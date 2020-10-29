@@ -104,7 +104,7 @@ fi
 
 
 # Cloning H4cker github
-echo "Cloning h4cker to $(pwd)/h4cker"
+echo "[*] Cloning h4cker to $(pwd)/h4cker"
 cd "$SETUP_DIR"
 if [[ ! -d h4cker ]]; then
     git clone https://github.com/The-Art-of-Hacking/h4cker.git || exit 30
@@ -113,7 +113,7 @@ else
 fi
 
 # Getting test ssl script
-echo "Getting testssl.sh"
+echo "[*] Getting testssl.sh"
 cd "$SETUP_DIR"
 if [[ ! -f testssl.sh ]]; then
     curl -L https://testssl.sh --output testssl.sh || exit 31
@@ -124,7 +124,7 @@ fi
 
 # Install python modules
 # Use pip3 by default, since Python2 is officially deprecated
-echo "Install python modules"
+echo "[*] Install python modules"
 pip3 install pep8 flake8 pyflakes isort yapf || exit 17
 
 # Then get the .vimrc file from my repo, and install in /etc/vim/vimrc.local so that
@@ -132,7 +132,7 @@ pip3 install pep8 flake8 pyflakes isort yapf || exit 17
 curl https://raw.githubusercontent.com/The-Art-of-Hacking/websploit/master/.vimrc > /etc/vim/vimrc.local || exit 18
 
 #installing Docker
-echo "Installing docker"
+echo "[*] Installing docker"
 if ! docker ps -a 2>&1 1>/dev/null; then
     cd "$SETUP_DIR"
     curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - || exit 20
@@ -144,7 +144,7 @@ if ! docker ps -a 2>&1 1>/dev/null; then
     # If we do not want it to run on boot, we need to disable it
     # systemctl disable docker || exit 40
 else
-    echo "Docker already installed: $(docker --version)"
+    echo "[-] Docker already installed: $(docker --version)"
 fi
 
 # setup containers
