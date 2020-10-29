@@ -6,11 +6,6 @@
 # Twitter: @santosomar
 # Version: 2.7
 
-# Notes 
-# 1. Instead of piping the command from the outpout of curl to sudo bash,
-#    it would be better to store the file in a safe place, like Documents/ethical-hacking/install.sh
-#    and then have the user/student execute ./install.sh.
-
 
 clear
 echo "
@@ -36,25 +31,25 @@ read -n 1 -s -r -p "Press any key to continue the setup..."
 
 echo " "
 
-echo "[*] Make sure the system is up to date"
-echo "[*] Make sure apt is using https"
 # Make sure apt is using https (http is the default)
+echo "[*] Make sure apt is using https"
 sed -i 's|^deb http://|deb https://|'  /etc/apt/sources.list || exit 50
 
+echo "[*] Make sure the system is up to date"
 # Update repository metadata
 apt update || exit 10
 
 # Upgrade existing packages
 apt upgrade -y --with-new-pkgs || exit 51
 
-echo "[*] Install applications from standard repositories"
 # Install applications from standard repositories
+echo "[*] Install applications from standard repositories"
 apt install -y wget vim vim-python-jedi curl exuberant-ctags \
     git ack-grep python3-pip ffuf jupyter-notebook \
     edb-debugger gobuster zaproxy || exit 11
 
-echo "[*] Clean up any packages and dependencies that are no longer needed"
 # Clean up any packages and dependencies that are no longer needed
+echo "[*] Clean up any packages and dependencies that are no longer needed"
 apt autoremove -y || exit 10
 
 # Get the username of the user running the script using sudo
@@ -64,14 +59,14 @@ SCRIPT_USER="$(whoami)"
 SETUP_DIR="/home/$SCRIPT_USER/websploit"
 mkdir -p "$SETUP_DIR" || exit 12
 
-echo "[*] Install radamsa"
 # Installing radamsa
+echo "[*] Install radamsa"
 cd "$SETUP_DIR"
 if ! radamsa --version 2>/dev/null; then
     if [[ ! -d radamsa ]]; then
         git clone https://gitlab.com/akihe/radamsa.git
     else
-        echo "[-] Radamsa repo already cloned"
+        echo "[-] Radamsa repo already cloned in $(pwd)/radamsa"
     fi
     cd radamsa && make && make install || exit 13
 else
@@ -84,6 +79,7 @@ fi
 # Check if java version >=11 is installed.  If not, install it.
 JAVA_VER="$(java --version 2>/dev/null | grep "^openjdk" | cut -d' ' -f2 | cut -d'.' -f1)"
 if [[ JAVA_VER -lt 11 ]]; then
+    echo "[*] Install Java"
     cd "$SETUP_DIR"
     wget https://download.websploit.org/jdk.deb || exit 14
     apt install -y ./jdk.deb || exit 15
@@ -116,14 +112,14 @@ else
     echo "[-] h4cker repo already cloned to $(pwd)/h4cker"
 fi
 
-#getting test ssl script
-echo "Creating testssl.sh"
+# Getting test ssl script
+echo "Getting testssl.sh"
 cd "$SETUP_DIR"
 if [[ ! -f testssl.sh ]]; then
     curl -L https://testssl.sh --output testssl.sh || exit 31
     chmod +x testssl.sh || exit 32
 else
-    echo "testssl.sh file already exists"
+    echo "[-] testssl.sh file already exists"
 fi
 
 # Install python modules
@@ -137,7 +133,7 @@ curl https://raw.githubusercontent.com/The-Art-of-Hacking/websploit/master/.vimr
 
 #installing Docker
 echo "Installing docker"
-if ! docker ps -a; then
+if ! docker ps -a 2>&1 1>/dev/null; then
     cd "$SETUP_DIR"
     curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add - || exit 20
     echo 'deb [arch=amd64] https://download.docker.com/linux/debian buster stable' | sudo tee /etc/apt/sources.list.d/docker.list || exit 21
@@ -167,11 +163,11 @@ if docker ps 2>&1 1>/dev/null; then
     docker run --name yascon-hackme -d --restart unless-stopped -p 9002:80 santosomar/yascon-hackme
 else
     echo "[ERROR] Docker is not running. Cannot run containers."
-    eixt 60
+    exit 60
 fi
 # for bwapp - go to /install.php then user/pass is bee/bug
 
-#downloading the h4cker wallpaper
+# Downloading the h4cker wallpaper
 echo "[*] Downloading h4cker wallpaper"
 if [[ -d "$HOME/Pictures" ]]; then
     cd "$HOME"/Pictures
@@ -202,6 +198,7 @@ fi
 #     sense of security.
 
 #Getting the container info script
+echo "[*] Get containers.sh"
 cd "$SETUP_DIR"
 if [[ ! -f containers.sh ]]; then
     wget http://websploit.h4cker.org/containers.sh
