@@ -193,7 +193,6 @@ if [[ ! -f "$ALIAS_FILE" ]]; then
     chmod 744 "$ALIAS_FILE"
     echo "source $ALIAS_FILE" >> "$HOME/.bashrc"
     echo "source $ALIAS_FILE" >> "/root/.bashrc"
-    source ~/.bashrc
 else
     echo "[-] Alias file already exists.  Edit aliases at $ALIAS_FILE"
 fi
