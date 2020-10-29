@@ -87,19 +87,19 @@ if [[ JAVA_VER -lt 11 ]]; then
     wget https://download.websploit.org/jdk.deb || exit 14
     apt install -y ./jdk.deb || exit 15
 else
-    echo "[-] Java already installed: \n\n $(java --version)"
+    echo -e "[-] Java already installed: \n\n $(java --version)"
 fi
 
 # Download and unzip ghidra
 GHIDRA_DIR="ghidra_9.1.2_PUBLIC"
 GHIDRA_FILE="$GHIDRA_DIR""_20200212.zip"
 cd "$SETUP_DIR"
-if [[ ! -d "$GHIDRA_FILE" ]]; then
+if [[ ! -f "$GHIDRA_FILE" ]]; then
     wget https://ghidra-sre.org/ghidra_9.1.2_PUBLIC_20200212.zip || exit 16
 else
     echo "[-] Ghidra file already downloaded"
 fi
-if [[ ! -f "GHIDRA_DIR" ]]; then
+if [[ ! -d "GHIDRA_DIR" ]]; then
     unzip ghidra* || exit 17
 else
     echo "[-] Ghidra already extracted to $GHIDRA_DIR"
