@@ -186,7 +186,10 @@ ALIAS_FILE="$SETUP_DIR/websploit-aliases.sh"
 echo "[*] Adding aliases"
 cd "$SETUP_DIR"
 if [[ ! -f "$ALIAS_FILE" ]]; then
+    echo "#!/bin/bash" > "$ALIAS_FILE"
+    echo "" >> "$ALIAS_FILE"
     echo "alias i='ip -c -brie a'" >> "$ALIAS_FILE"
+    chmod 744 "$ALIAS_FILE"
     echo "source $ALIAS_FILE" >> "$HOME/.bashrc"
     echo "source $ALIAS_FILE" >> root/.bashrc
     source .bashrc
@@ -205,7 +208,7 @@ echo "[*] Get containers.sh"
 cd "$SETUP_DIR"
 if [[ ! -f containers.sh ]]; then
     wget http://websploit.h4cker.org/containers.sh
-    chmod 744 containers.sh
+    chmod 755 containers.sh
 else
     echo "[-] containers.sh already exists."
 fi
