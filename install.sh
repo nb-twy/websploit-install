@@ -99,7 +99,7 @@ if [[ ! -f "$GHIDRA_FILE" ]]; then
 else
     echo "[-] Ghidra file already downloaded"
 fi
-if [[ ! -d "GHIDRA_DIR" ]]; then
+if [[ ! -d "$GHIDRA_DIR" ]]; then
     unzip ghidra* || exit 17
 else
     echo "[-] Ghidra already extracted to $GHIDRA_DIR"
